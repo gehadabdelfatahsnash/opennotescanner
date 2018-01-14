@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +25,10 @@ import com.todobom.opennotescanner.R;
 
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+
+import java.io.File;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  * Created by allgood on 22/02/16.
@@ -86,7 +91,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
             long id = intent.getExtras().getLong(DownloadManager.EXTRA_DOWNLOAD_ID);
 
             if ( id == myDownloadReference ) {
-                DownloadManager dm = (DownloadManager) AppContext.getSystemService(AppContext.DOWNLOAD_SERVICE);
+                DownloadManager dm = (DownloadManager) AppContext.getSystemService(DOWNLOAD_SERVICE);
 
                 DownloadManager.Query query = new DownloadManager.Query();
                 query.setFilterById(id);
@@ -100,8 +105,15 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
                     int fileNameIndex = cursor.getColumnIndex(DownloadManager
                             .COLUMN_LOCAL_FILENAME);
-                    String savedFilePath = cursor.getString(fileNameIndex);
-
+                  //  String savedFilePath = cursor.getString(fileNameIndex);
+                    DownloadManager downloadManager = DownloadManager.class.cast(ctxt.getSystemService(DOWNLOAD_SERVICE));
+                    Uri urii = downloadManager.getUriForDownloadedFile(id);
+                    String downloadFilePath = null;
+                    String downloadFileLocalUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                    if (downloadFileLocalUri != null) {
+                        File mFile = new File(Uri.parse(downloadFileLocalUri).getPath());
+                        downloadFilePath = mFile.getAbsolutePath();
+                    }
                     // get the reason - more detail on the status
                     int columnReason = cursor.getColumnIndex(DownloadManager
                             .COLUMN_REASON);
@@ -113,7 +125,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                             waitOpenCVDialog.dismiss();
                             AppContext.unregisterReceiver(onComplete);
 
-                            String path = "file://" + savedFilePath;
+                            String path = "file://" + downloadFilePath;
                             Uri uri = Uri.parse(path);
                             Log.d(TAG,"dm query: " + path );
                             intent = new Intent(Intent.ACTION_VIEW);
@@ -145,6 +157,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
     static Dialog waitOpenCVDialog;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static boolean initAsync(String version, final Context AppContext, LoaderCallbackInterface callback) {
 
         Version = version;
@@ -184,7 +197,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                         onComplete = new MyBroadcastReceiver(AppContext);
                         AppContext.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
-                        final DownloadManager dm = (DownloadManager) AppContext.getSystemService(AppContext.DOWNLOAD_SERVICE);
+                        final DownloadManager dm = (DownloadManager) AppContext.getSystemService(DOWNLOAD_SERVICE);
                         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(sAndroidUrl));
                         String sDest = "file://" + android.os.Environment.getExternalStorageDirectory().toString() + "/Download/OpenCV_3.1.0_Manager_3.10_" + arch + ".apk";
                         request.setDestinationUri(Uri.parse(sDest));

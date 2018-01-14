@@ -148,12 +148,12 @@
                     app:fabSize="mini"
                     app:borderWidth="0dp"
                     app:elevation="0sp"
-                    android:src="@drawable/abc_ic_menu_overflow_material"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="#A060FF60"
                     android:tint="#ffffff"
                     android:rotation="90"/>
-
+<!--                    android:src="@drawable/abc_ic_menu_overflow_material"
+-->
             </RelativeLayout>
 
             <LinearLayout
@@ -237,11 +237,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@drawable/abc_ic_clear_material"
                     android:gravity="center"
                     android:enabled="true"
                     android:tint="#ffffff"/>
-
+<!--                    android:src="@drawable/abc_ic_clear_material"
+-->
             </LinearLayout>
 
         </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
@@ -267,7 +267,6 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:background="@drawable/ic_camera_green"
         android:gravity="center"
         android:enabled="true"
         />

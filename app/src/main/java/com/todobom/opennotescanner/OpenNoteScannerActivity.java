@@ -24,6 +24,7 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -217,6 +218,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         scanDocButton.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 if (scanClicked) {
@@ -504,6 +506,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onResume() {
         super.onResume();
@@ -843,6 +846,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     }
 
     private class ResetShutterColor implements Runnable {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void run() {
             scanDocButton.setBackgroundTintList(null);

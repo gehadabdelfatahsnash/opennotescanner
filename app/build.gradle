@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
+    flavorDimensions "default"
+
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 27
         versionCode 29
         versionName '1.0.29'
     }
@@ -34,10 +36,10 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:appcompat-v7:27.0.0'
+    compile 'com.android.support:design:27.0.0'
     compile 'com.google.zxing:core:3.0.1'
-    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:support-v4:27.0.0'
     compile 'com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115'
     compile 'us.feras.mdv:markdownview:1.1.0'
     compile 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
